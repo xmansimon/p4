@@ -2,6 +2,13 @@
 
 return [
 
+    'nav' => [
+        '/tennis' => 'All courts',
+        '/tennis/create' => 'Add a court',
+        '/tennis/search' => 'Find a Court',
+        '/about' => 'About',
+        '/contact' => 'Contact',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +20,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => 'Tennis Buddy Finder',
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +33,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'dev'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +46,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------

@@ -1,0 +1,1 @@
+Tennis Buddy Finder helps players find tennis mate who go to the same courts. You can also add info on courts and wait for your next tennis buddy to contact you. If no courts shown is near you, you may add more courts.
