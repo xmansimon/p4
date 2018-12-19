@@ -1,33 +1,31 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ $book->title }}
+    {{ $court->title }}
 @endsection
 
 @push('head')
-    <link href='/css/books/_book.css' rel='stylesheet'>
     <link href='/css/books/show.css' rel='stylesheet'>
 
 @endpush
 
 @section('content')
-    <h1>{{ $book->title }}</h1>
+    <h1>{{ $court->title }}</h1>
 
-    <div class='book cf'>
-        <img src='{{ $book->cover_url }}' class='cover' alt='Cover image for {{ $book->title }}'>
-        <p>By {{ $book->author->getFullName() }} ({{ $book->published_year }})</p>
-        <p>Added {{ $book->created_at->format('m/d/y') }}</p>
+    <div class='court cf'>
+        <p>Located at {{ $court->street }}, {{ $court->city }}, {{ $court->zip }}</p>
+        <p>Type: {{ $court->type }}</p>
 
         <p>
-            @foreach($book->tags as $tag)
-                <span class='tag'>{{ $tag->name }}</span>
-            @endforeach
+            {{--@foreach($court->tags as $tag)--}}
+                {{--<span class='tag'>{{ $tag->name }}</span>--}}
+            {{--@endforeach--}}
         </p>
 
         <ul class='bookActions'>
-            <li><a href='{{ $book->purchase_url }}'><i class="fas fa-shopping-cart"></i> Purchase</a>
-            <li><a href='/books/{{ $book->id }}/edit'><i class="fas fa-pencil-alt"></i> Edit</a>
-            <li><a href='/books/{{ $book->id }}/delete'><i class="fas fa-trash-alt"></i> Delete</a>
+            <li><a href='{{ $court->link_url }}'><i class="fas fa-external-link-alt"></i> Official Website</a>
+            <li><a href='/books/{{ $court->id }}/edit'><i class="fas fa-pencil-alt"></i> Edit</a>
+            <li><a href='/books/{{ $court->id }}/delete'><i class="fas fa-trash-alt"></i> Delete</a>
         </ul>
     </div>
 @endsection

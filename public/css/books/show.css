@@ -20,14 +20,7 @@
     padding: 3px;
 }
 
-.cover {
-    float: left;
-    width: 100px;
-    height: 137px;
-    background-color: #eee;
-    border: 1px solid black;
-    margin-right: 10px;
-}
+
 
 .bookActions {
     list-style-type: none;

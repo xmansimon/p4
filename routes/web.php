@@ -43,8 +43,11 @@ Route::get('/', 'WelcomeController');
 Route::get('/tennis/{id}', 'TennisController@show');
 Route::get('/tennis', 'TennisController@index');
 
+Route::get('/tennis/create', 'TennisController@create');
+Route::post('/tennis', 'TeenisController@store');
 
-Route::get('/books/search', 'BookController@search');
-Route::get('/books/search-process', 'BookController@searchProcess');
+Route::get('/tennis/search', 'TennisController@search');
+Route::get('/tennis/search-process', 'TennisController@searchProcess');
 
-#
+//Route::get('/books/search', 'BookController@search');
+//Route::get('/books/search-process', 'BookController@searchProcess');

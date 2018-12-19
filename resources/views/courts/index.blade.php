@@ -11,18 +11,17 @@
 
 @section('content')
     <section id='newBooks'>
-        <h2>Recently added books</h2>
+        <h2>Recently added courts</h2>
         <ul>
-            @foreach($newBooks as $book)
-                <li>{{ $book->title }}</li>
+            @foreach($newCourts as $court)
+                <li>{{ $court->title }}</li>
             @endforeach
         </ul>
     </section>
-
     <section id='allBooks'>
         <h2>All books</h2>
-        @foreach($books as $book)
-            @include('books._book')
+        @foreach($courts as $court)
+            @include('courts._court')
         @endforeach
     </section>
 @endsection

@@ -1,8 +1,6 @@
 <div class='book cf'>
-    <img class='cover' src='{{ $book->cover_url }}' alt='Cover image for the book {{ $book->title }}'>
-    <a href='/books/{{ $book->id }}'><h3>{{ $book->title }}</h3></a>
+    <a href='/tennis/{{ $court->id }}'><h3>{{ $court->title }}</h3></a>
     <ul>
-        <li>by {{ $book->author->getFullName() }}</li>
-        <li>Added {{ $book->created_at->format('m/d/y g:ia') }}</li>
+        <li>Located at {{ $court->street }}, {{ $court->city }}, {{ $court->zip }}</li>
     </ul>
 </div>

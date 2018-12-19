@@ -24,8 +24,11 @@ class CreateCourtsTable extends Migration
 
             # The rest of the fields...
             $table->string('title');
-            $table->string('location');
-            $table->string('player')->nullable();
+            $table->string('street');
+            $table->string('city');
+            $table->string('zip');
+            $table->string('type');
+            $table->string('owner')->nullable();
             $table->string('link_url');
         });
     }

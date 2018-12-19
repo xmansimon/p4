@@ -21,7 +21,6 @@
 @endif
 
 <header>
-    {{--<a href='/'><img src='/images/tennisball.jpg' id='logo' alt='Foobooks Logo'></a>--}}
     @include('modules.nav')
 </header>
 

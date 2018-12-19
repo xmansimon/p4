@@ -3,40 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Book;
-use App\Author;
-use App\Tag;
+use App\Court;
+//use App\Author;
+//use App\Tag;
 
 class TennisController extends Controller
 {
-    /*
-     * GET /books
-     */
+
+//Route::get('/tennis', 'TennisController@index');
+
     public function index()
     {
+
         $courts = Court::orderBy('title')->get();
 
-        # Approach 1 - Query the database
-        # $newBooks = Book::latest()->limit(3)->get();
-
-        # Approach 2 - Query the collection (more efficient)
         $newCourts = $courts->sortByDesc('created_at')->take(3);
 
-        return view('books.index')->with([
+        return view('courts.index')->with([
             'courts' => $courts,
             'newCourts' => $newCourts
         ]);
     }
 
-    /*
-     * GET /books/{id}
-     */
+    //Route::get('/tennis/{id}', 'TennisController@show');
     public function show(Request $request, $id)
     {
-        $book = Book::find($id);
+        $court = Court::find($id);
 
-        return view('books.show')->with([
-            'book' => $book
+        return view('courts.show')->with([
+            'court' => $court
         ]);
     }
 
@@ -47,7 +42,7 @@ class TennisController extends Controller
      */
     public function search(Request $request)
     {
-        return view('books.search')->with([
+        return view('courts.search')->with([
             'searchTerm' => session('searchTerm', ''),
             'caseSensitive' => session('caseSensitive', false),
             'searchResults' => session('searchResults', []),
@@ -62,7 +57,7 @@ class TennisController extends Controller
      */
     public function searchProcess(Request $request)
     {
-        # Start with an empty array of search results; books that
+        # Start with an empty array of search results; courts that
         # match our search query will get added to this array
         $searchResults = [];
 
@@ -73,18 +68,18 @@ class TennisController extends Controller
 
         # Only try and search *if* there's a searchTerm
         if ($searchTerm) {
-            # Open the books.json data file
+            # Open the courts.json data file
             # database_path() is a Laravel helper to get the path to the database folder
             # See https://laravel.com/docs/helpers for other path related helpers
-            $booksRawData = file_get_contents(database_path('/books.json'));
+            $booksRawData = file_get_contents(database_path('/courts.json'));
 
             # Decode the book JSON data into an array
             # Nothing fancy here; just a built in PHP method
-            $books = json_decode($booksRawData, true);
+            $courts = json_decode($booksRawData, true);
 
             # Loop through all the book data, looking for matches
             # This code was taken from v0 of foobooks we built earlier in the semester
-            foreach ($books as $title => $book) {
+            foreach ($courts as $title => $book) {
                 # Case sensitive boolean check for a match
                 if ($request->has('caseSensitive')) {
                     $match = $title == $searchTerm;
@@ -102,7 +97,7 @@ class TennisController extends Controller
 
         # Redirect back to the search page w/ the searchTerm *and* searchResults (if any) stored in the session
         # Ref: https://laravel.com/docs/redirects#redirecting-with-flashed-session-data
-        return redirect('/books/search')->with([
+        return redirect('/courts/search')->with([
             'searchTerm' => $searchTerm,
             'caseSensitive' => $request->has('caseSensitive'),
             'searchResults' => $searchResults
@@ -118,7 +113,7 @@ class TennisController extends Controller
         $authors = Author::getForDropdown();
         $tags = Tag::getForCheckboxes();
 
-        return view('books.create')->with([
+        return view('courts.create')->with([
             'authors' => $authors,
             'tags' => $tags
         ]);

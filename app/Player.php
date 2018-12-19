@@ -4,23 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Player extends Model
 {
-    public function books()
+    public function courts()
     {
-        return $this->belongsToMany('App\Book')->withTimestamps();
+        return $this->belongsToMany('App\Court')->withTimestamps(); // many to many
     }
 
-    public static function getForCheckboxes()
+
+
+    public static function getPlayerList()
     {
-        $tags = self::orderBy('name')->get();
+        $players = self::orderBy('name')->get();
 
-        $tagsForCheckboxes = [];
+        $playerList = [];
 
-        foreach ($tags as $tag) {
-            $tagsForCheckboxes[$tag['id']] = $tag->name;
+        foreach ($players as $player) {
+            $playerList[$player['id']] = $player->name;
         }
 
-        return $tagsForCheckboxes;
+        return $playerList;
     }
 }

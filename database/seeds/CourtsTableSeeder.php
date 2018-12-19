@@ -13,11 +13,11 @@ class CourtsTableSeeder extends Seeder
     public function run()
     {
         $courts = [
-            [ 'Boston Common Tennis Court', 'Boston, MA 02108','david Smith', 'https://www.google.com'],
-            [ 'Joe Moakley Park Tennis Courts' , 'Boston, MA 02125', 'Uda Lane', 'https://www.google.com'],
-            [ 'Southwest Corridor Park- Tennis Courts' , '260 Albert St, Boston, MA 02120', 'Koko Wang', 'https://www.google.com'],
-            [ 'Beren Tennis Center' , '65 N Harvard St, Boston, MA 02134', 'bb Sam', 'https://www.google.com'],
-
+            [ 'Boston Common Tennis Court', 'Boston Common','Boston', '02108','outdoor','david Smith', 'https://www.google.com'],
+            [ 'Joe Moakley Park Tennis Courts' , 'Joe Moakley Park','Boston', '02125','outdoor', 'Uda Lane', 'https://www.google.com'],
+            [ 'Southwest Corridor Park- Tennis Courts' , '260 Albert St', 'Boston',  '02120','outdoor', 'Koko Wang', 'https://www.google.com'],
+            [ 'Beren Tennis Center' , '65 N Harvard St', 'Boston', '02134', 'indoor','bb Sam', 'https://www.google.com'],
+            [ 'Amory Tennis Center' , '45 Amory St', 'Brookline', '02445', 'outdoor','bob Sam', 'https://www.google.com'],
         ];
 
         $count = count($courts);
@@ -38,11 +38,15 @@ class CourtsTableSeeder extends Seeder
             $court->created_at = Carbon\Carbon::now()->subDays($count)->toDateTimeString();
             $court->updated_at = Carbon\Carbon::now()->subDays($count)->toDateTimeString();
             $court->title = $courtData[0];
-            $court->player = $courtData[2];
+            $court->street = $courtData[1];
+            $court->city = $courtData[2];
+            $court->zip = $courtData[3];
+            $court->type = $courtData[4];
+
+            $court->owner = $courtData[5];
 
             //$court->author_id = $author_id;
-            $court->location = $courtData[1];
-            $court->link_url = $courtData[3];
+            $court->link_url = $courtData[6];
 
             $court->save();
             $count--;
