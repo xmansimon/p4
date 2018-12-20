@@ -16,6 +16,14 @@ class CreateCourtPlayerTable extends Migration
         Schema::create('court_player', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+
+            $table->integer('court_id')->unsigned();
+            $table->integer('player_id')->unsigned();
+
+            # Make foreign keys
+            $table->foreign('court_id')->references('id')->on('courts');
+            $table->foreign('player_id')->references('id')->on('players');
         });
     }
 

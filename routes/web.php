@@ -39,15 +39,24 @@ Route::get('/debug', function () {
 
 Route::get('/', 'WelcomeController');
 
+# CREATE
+Route::get('/tennis/create', 'TennisController@create');
+Route::post('/tennis', 'TennisController@store');
 
+# READ
 Route::get('/tennis/{id}', 'TennisController@show');
 Route::get('/tennis', 'TennisController@index');
 
-Route::get('/tennis/create', 'TennisController@create');
-Route::post('/tennis', 'TeenisController@store');
+#UPDATE
+Route::get('/tennis/{id}/edit', 'TennisController@edit');
+Route::put('/tennis/{id}', 'TennisController@update');
 
-Route::get('/tennis/search', 'TennisController@search');
-Route::get('/tennis/search-process', 'TennisController@searchProcess');
 
-//Route::get('/books/search', 'BookController@search');
-//Route::get('/books/search-process', 'BookController@searchProcess');
+#DELETE
+Route::get('/tennis/{id}/delete', 'TennisController@delete');
+Route::delete('/tennis/{id}', 'TennisController@destroy');
+
+#Add Player
+Route::get('/tennis/{id}/add', 'TennisController@add');
+Route::put('/tennis/{id}', 'TennisController@addprocess');
+

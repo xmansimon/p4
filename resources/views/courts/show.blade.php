@@ -17,15 +17,18 @@
         <p>Type: {{ $court->type }}</p>
 
         <p>
-            {{--@foreach($court->tags as $tag)--}}
-                {{--<span class='tag'>{{ $tag->name }}</span>--}}
-            {{--@endforeach--}}
+            Players at this court:
+        @foreach($court->players as $player)
+            <ul class='bookActions'><li><span class='player'>{{ $player->name }}</span></li></ul>
+            @endforeach
+
         </p>
 
         <ul class='bookActions'>
             <li><a href='{{ $court->link_url }}'><i class="fas fa-external-link-alt"></i> Official Website</a>
-            <li><a href='/books/{{ $court->id }}/edit'><i class="fas fa-pencil-alt"></i> Edit</a>
-            <li><a href='/books/{{ $court->id }}/delete'><i class="fas fa-trash-alt"></i> Delete</a>
+            <li><a href='/tennis/{{ $court->id }}/add'><i class="fas fa-trash-alt"></i> Add Player</a>
+            <li><a href='/tennis/{{ $court->id }}/edit'><i class="fas fa-pencil-alt"></i> Edit</a>
+            <li><a href='/tennis/{{ $court->id }}/delete'><i class="fas fa-trash-alt"></i> Delete</a>
         </ul>
     </div>
 @endsection

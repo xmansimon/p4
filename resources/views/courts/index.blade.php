@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    All books
+    All Courts
 @endsection
 
 @push('head')
-    <link href='/css/books/index.css' rel='stylesheet'>
-    <link href='/css/books/_book.css' rel='stylesheet'>
+    <link href='/css/tennis/index.css' rel='stylesheet'>
+    <link href='/css/tennis/_book.css' rel='stylesheet'>
 @endpush
 
 @section('content')
@@ -19,7 +19,7 @@
         </ul>
     </section>
     <section id='allBooks'>
-        <h2>All books</h2>
+        <h2>All courts</h2>
         @foreach($courts as $court)
             @include('courts._court')
         @endforeach

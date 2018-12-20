@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Court;
-//use App\Author;
+use App\Player;
 //use App\Tag;
 
 class TennisController extends Controller
@@ -35,87 +35,16 @@ class TennisController extends Controller
         ]);
     }
 
-    /**
-     * GET
-     * /books/search
-     * Show the form to search for a book
-     */
-    public function search(Request $request)
-    {
-        return view('courts.search')->with([
-            'searchTerm' => session('searchTerm', ''),
-            'caseSensitive' => session('caseSensitive', false),
-            'searchResults' => session('searchResults', []),
-        ]);
-    }
 
-    /**
-     * TODO: Refactor to get books from database, not books.json
-     * GET
-     * /books/search-process
-     * Process the form to search for a book
-     */
-    public function searchProcess(Request $request)
-    {
-        # Start with an empty array of search results; courts that
-        # match our search query will get added to this array
-        $searchResults = [];
-
-        # Store the searchTerm in a variable for easy access
-        # The second parameter (null) is what the variable
-        # will be set to *if* searchTerm is not in the request.
-        $searchTerm = $request->input('searchTerm', null);
-
-        # Only try and search *if* there's a searchTerm
-        if ($searchTerm) {
-            # Open the courts.json data file
-            # database_path() is a Laravel helper to get the path to the database folder
-            # See https://laravel.com/docs/helpers for other path related helpers
-            $booksRawData = file_get_contents(database_path('/courts.json'));
-
-            # Decode the book JSON data into an array
-            # Nothing fancy here; just a built in PHP method
-            $courts = json_decode($booksRawData, true);
-
-            # Loop through all the book data, looking for matches
-            # This code was taken from v0 of foobooks we built earlier in the semester
-            foreach ($courts as $title => $book) {
-                # Case sensitive boolean check for a match
-                if ($request->has('caseSensitive')) {
-                    $match = $title == $searchTerm;
-                    # Case insensitive boolean check for a match
-                } else {
-                    $match = strtolower($title) == strtolower($searchTerm);
-                }
-
-                # If it was a match, add it to our results
-                if ($match) {
-                    $searchResults[$title] = $book;
-                }
-            }
-        }
-
-        # Redirect back to the search page w/ the searchTerm *and* searchResults (if any) stored in the session
-        # Ref: https://laravel.com/docs/redirects#redirecting-with-flashed-session-data
-        return redirect('/courts/search')->with([
-            'searchTerm' => $searchTerm,
-            'caseSensitive' => $request->has('caseSensitive'),
-            'searchResults' => $searchResults
-        ]);
-    }
-
-    /**
-     * GET /books/create
-     * Display the form to add a new book
-     */
     public function create(Request $request)
     {
-        $authors = Author::getForDropdown();
-        $tags = Tag::getForCheckboxes();
+        $players = Player::getPlayerList();
+        $types =  Court::distinct('type')->get();
 
         return view('courts.create')->with([
-            'authors' => $authors,
-            'tags' => $tags
+            //'authors' => $authors,
+            'type' => $types,
+            'players' => $players
         ]);
     }
 
@@ -128,59 +57,44 @@ class TennisController extends Controller
         # Validate the request data
         $request->validate([
             'title' => 'required',
-            'author_id' => 'required',
-            'published_year' => 'required|digits:4',
-            'cover_url' => 'required|url',
-            'purchase_url' => 'required|url'
+            'street'=>'required',
+            'city' => 'required',
+            'type' => 'required',
+            'zip' => 'required|digits:5|numeric',
+            'link_url' => 'required|url'
         ]);
 
-        $book = new Book();
-        $book->title = $request->title;
+        $court = new Court();
+        $court->title = $request->title;
+        $court->type = $request->type;
 
-        # Approach 1 - Using a relationship method
-        //$author = Author::find($request->author_id);
-        //$book->author()->associate($author);
+        $court->street = $request->street;
+        $court->city = $request->city;
+        $court->zip = $request->zip;
+        $court->link_url = $request->link_url;
+        $court->save();
 
-        # Approach 2 - Manually setting the FK (more efficient)
-        $book->author_id = $request->author_id;
-
-        $book->published_year = $request->published_year;
-        $book->cover_url = $request->cover_url;
-        $book->purchase_url = $request->purchase_url;
-        $book->save();
-
-        # Note: Have to sync tags *after* the book has been saved so there's a book_id to store in the pivot table
-        $book->tags()->sync($request->tags);
-
-        return redirect('/books')->with([
-            'alert' => 'Your book was added.'
+        return redirect('/tennis')->with([
+            'alert' => 'New court was added.'
         ]);
     }
 
     /*
-    * GET /books/{id}/edit
+    * Route::get('/tennis/{id}/edit', 'TennisController@edit');
     */
     public function edit($id)
     {
-        $book = Book::find($id);
+        $court = Court::find($id);
 
-        $authors = Author::getForDropdown();
-
-        $tags = Tag::getForCheckboxes();
-
-        $tagsForThisBook = $book->tags()->pluck('tags.id')->toArray();
-
-        if (!$book) {
-            return redirect('/books')->with([
-                'alert' => 'Book not found.'
+        if (!$court) {
+            return redirect('/tennis')->with([
+                'alert' => 'Court not found.'
             ]);
         }
 
-        return view('books.edit')->with([
-            'book' => $book,
-            'authors' => $authors,
-            'tags' => $tags,
-            'tagsForThisBook' => $tagsForThisBook
+        return view('courts.edit')->with([
+            'court' => $court,
+
         ]);
     }
 
@@ -191,59 +105,104 @@ class TennisController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'author_id' => 'required',
-            'published_year' => 'required|digits:4|numeric',
-            'cover_url' => 'required|url',
-            'purchase_url' => 'required|url',
+            'street'=>'required',
+            'city' => 'required',
+            'type' => 'required',
+            'zip' => 'required|digits:5|numeric',
+            'link_url' => 'required|url'
         ]);
 
-        $book = Book::find($id);
+        $court = Court::find($id);
 
-        $book->tags()->sync($request->tags);
+        //$court->tags()->sync($request->tags);
 
-        $book->title = $request->title;
-        $book->author_id = $request->author_id;
-        $book->published_year = $request->published_year;
-        $book->cover_url = $request->cover_url;
-        $book->purchase_url = $request->purchase_url;
-        $book->save();
+        $court->title = $request->title;
+        $court->type = $request->type;
+        $court->street = $request->street;
+        $court->city = $request->city;
+        $court->zip = $request->zip;
+        $court->link_url = $request->link_url;
+        $court->save();
 
-        return redirect('/books/' . $id . '/edit')->with([
+        return redirect('/tennis/' . $id . '/edit')->with([
             'alert' => 'Your changes were saved.'
         ]);
     }
 
-    /*
-   * Asks user to confirm they actually want to delete the book
-   * GET /books/{id}/delete
+    /*Delete
    */
     public function delete($id)
     {
-        $book = Book::find($id);
+        $court = Court::find($id);
 
-        if (!$book) {
-            return redirect('/books')->with('alert', 'Book not found');
+        if (!$court) {
+            return redirect('/tennis')->with('alert', 'Court not found');
         }
 
-        return view('books.delete')->with([
-            'book' => $book,
+        return view('courts.delete')->with([
+            'court' => $court,
         ]);
     }
-
-    /*
-    * Actually deletes the book
-    * DELETE /books/{id}/delete
-    */
     public function destroy($id)
     {
-        $book = Book::find($id);
+        $court = Court::find($id);
 
-        $book->tags()->detach();
+       $court->players()->detach();
 
-        $book->delete();
+        $court->delete();
 
-        return redirect('/books')->with([
-            'alert' => '“' . $book->title . '” was removed.'
+        return redirect('/tennis')->with([
+            'alert' => '“' . $court->title . '” was removed.'
         ]);
     }
+
+    /*Add a player*/
+    public function add($id)
+    {
+        $court = Court::find($id);
+        $players = Player::getPlayerList();
+        $playersAtCourt = $court->players()->pluck('players.name')->toArray();
+
+        if (!$court) {
+            return redirect('/tennis')->with([
+                'alert' => 'Court not found.'
+            ]);
+        }
+
+        return view('courts.player')->with([
+            'court' => $court,
+            'players' => $players,
+            'playersAtCourt' => $playersAtCourt
+
+        ]);
+
+    }
+
+
+    public function addprocess(Request $request,$id){
+        # Validate the request data
+        $request->validate([
+            'email' => 'required|email',
+            'name'=>'required',
+            'level' => 'required|numeric|between:0,7.0',
+        ]);
+        $player = new Player();
+        $player-> name = $request->name;
+        $player-> email = $request->email;
+        $player-> level = $request->level;
+        $player->save();
+
+        $court = Court::find($id);
+        $court->players()->attach($player);
+
+
+        return redirect()->action(
+            'TennisController@show', ['id' => $id])->with([
+            'alert' => 'Your record was added.'
+        ]);
+
+    }
+
 }
+
+

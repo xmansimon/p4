@@ -24,7 +24,7 @@ class CreateCourtsTable extends Migration
 
             # The rest of the fields...
             $table->string('title');
-            $table->string('street');
+            $table->string('street')->nullable();
             $table->string('city');
             $table->string('zip');
             $table->string('type');
