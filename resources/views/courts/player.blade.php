@@ -4,6 +4,10 @@
     Edit {{$court->title}}
 @endsection
 
+@push('head')
+    <link href='/css/tennis/addplayer.css' rel='stylesheet'>
+@endpush
+
 @section('content')
 
     @if(count($errors) > 0)
@@ -14,7 +18,7 @@
 
     <h1>Add player at {{ $court->title }}</h1>
 
-    <form method='POST' action='/tennis/{{ $court->id }}'>
+    <form method='POST' action='/player/{{ $court->id }}'>
 
         {{ method_field('put') }}
         {{ csrf_field() }}

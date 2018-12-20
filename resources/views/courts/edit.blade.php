@@ -24,32 +24,32 @@
         <input type='text' name='title' id='title' value='{{ old('title', $court->title) }}'>
         @include('modules.field-error', ['field' => 'title'])
 
-        {{--<label for='type'>* Court Type</label>--}}
-        {{--<label class="radio-inline"><input type='radio'name='type' value='indoor'  {{(old('type',$court->type) == "indoor")? 'checked' : ''}} > indoor</label>--}}
-        {{--<label class="radio-inline"><input type='radio'name='type' value='outdoor' {{(old('type',$court->type) == "outdoor")? 'checked' : ''}}> outdoor</label>--}}
-        {{--@include('modules.field-error', ['field' => 'type'])--}}
+        <label for='type'>* Court Type</label>
+        <label class="radio-inline"><input type='radio'name='type' value='indoor'  {{(old('type',$court->type) == "indoor")? 'checked' : ''}} > indoor</label>
+        <label class="radio-inline"><input type='radio'name='type' value='outdoor' {{(old('type',$court->type) == "outdoor")? 'checked' : ''}}> outdoor</label>
+        @include('modules.field-error', ['field' => 'type'])
 
 
-        {{--<label for='street'>* Street address </label>--}}
-        {{--<input type='text' name='street' id='street' value='{{ old('street',$court->street)}}'>--}}
-        {{--@include('modules.field-error', ['field' => 'street'])--}}
+        <label for='street'>* Street address </label>
+        <input type='text' name='street' id='street' value='{{ old('street',$court->street)}}'>
+        @include('modules.field-error', ['field' => 'street'])
 
-        {{--<label for='city'>* City </label>--}}
-        {{--<input type='text' name='city' id='city' value='{{ old('city', $court->city) }}'>--}}
-        {{--@include('modules.field-error', ['field' => 'city'])--}}
-
-
-        {{--<label for='zip'>* Zip </label>--}}
-        {{--<input type='text' name='zip' id='zip' value='{{ old('zip',$court->zip)}}'>--}}
-        {{--@include('modules.field-error', ['field' => 'zip'])--}}
+        <label for='city'>* City </label>
+        <input type='text' name='city' id='city' value='{{ old('city', $court->city) }}'>
+        @include('modules.field-error', ['field' => 'city'])
 
 
-        {{--<label for='link_url'>* Official Website</label>--}}
-        {{--<input type='text'--}}
-               {{--name='link_url'--}}
-               {{--id='link_url'--}}
-               {{--value='{{ old('link_url', $court->link_url)}}'>--}}
-        {{--@include('modules.field-error', ['field' => 'link_url'])--}}
+        <label for='zip'>* Zip </label>
+        <input type='text' name='zip' id='zip' value='{{ old('zip',$court->zip)}}'>
+        @include('modules.field-error', ['field' => 'zip'])
+
+
+        <label for='link_url'>* Official Website</label>
+        <input type='text'
+               name='link_url'
+               id='link_url'
+               value='{{ old('link_url', $court->link_url)}}'>
+        @include('modules.field-error', ['field' => 'link_url'])
 
 
 

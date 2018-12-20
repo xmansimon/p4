@@ -33,13 +33,9 @@ section#main {
 
 header {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-#logo {
-    /* Actual width is 632; displaying at half-size for retina screens */
-    width: 316px;
-}
 
 footer {
     text-align: center;
@@ -65,9 +61,11 @@ nav {
 }
 
 nav ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
-    list-style-type: none;
+    overflow: hidden;
+    background-color: #333;
 }
 
 nav ul li {
@@ -81,12 +79,17 @@ nav ul li {
 }
 
 nav ul li a:link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
 }
 
 nav ul li a:hover {
-    color: #18bc9c; /* teel */
+    color: #18bc9c;
 }
+
 
 /*----------------------------------------------------
 Typography
@@ -157,7 +160,7 @@ ul.checkboxes label {
 
 .error {
     list-style-type: none;
-    color: #a94442; /* reddish */
+    color: red;
     text-align: left;
     margin: 0;
     padding: 0;

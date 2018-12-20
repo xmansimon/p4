@@ -57,6 +57,6 @@ Route::get('/tennis/{id}/delete', 'TennisController@delete');
 Route::delete('/tennis/{id}', 'TennisController@destroy');
 
 #Add Player
-Route::get('/tennis/{id}/add', 'TennisController@add');
-Route::put('/tennis/{id}', 'TennisController@addprocess');
+Route::get('/player/{id}/add', 'PlayerController@add');
+Route::put('/player/{id}', 'PlayerController@addproces');
 

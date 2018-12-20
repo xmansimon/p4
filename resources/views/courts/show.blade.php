@@ -5,7 +5,7 @@
 @endsection
 
 @push('head')
-    <link href='/css/books/show.css' rel='stylesheet'>
+    <link href='/css/tennis/show.css' rel='stylesheet'>
 
 @endpush
 
@@ -25,10 +25,10 @@
         </p>
 
         <ul class='bookActions'>
-            <li><a href='{{ $court->link_url }}'><i class="fas fa-external-link-alt"></i> Official Website</a>
-            <li><a href='/tennis/{{ $court->id }}/add'><i class="fas fa-trash-alt"></i> Add Player</a>
-            <li><a href='/tennis/{{ $court->id }}/edit'><i class="fas fa-pencil-alt"></i> Edit</a>
-            <li><a href='/tennis/{{ $court->id }}/delete'><i class="fas fa-trash-alt"></i> Delete</a>
+            <li><a href='{{ $court->link_url }}'> Official Website</a>
+            <li><a href='/player/{{ $court->id }}/add'> Add Player</a>
+            <li><a href='/tennis/{{ $court->id }}/edit'>Edit</a>
+            <li><a href='/tennis/{{ $court->id }}/delete'>Delete</a>
         </ul>
     </div>
 @endsection

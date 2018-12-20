@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Court;
 use App\Player;
-//use App\Tag;
 
 class TennisController extends Controller
 {
@@ -93,13 +92,12 @@ class TennisController extends Controller
         }
 
         return view('courts.edit')->with([
-            'court' => $court,
-
+            'court' => $court
         ]);
     }
 
     /*
-    * PUT /books/{id}
+    * PUT
     */
     public function update(Request $request, $id)
     {
@@ -109,12 +107,10 @@ class TennisController extends Controller
             'city' => 'required',
             'type' => 'required',
             'zip' => 'required|digits:5|numeric',
-            'link_url' => 'required|url'
+            'link_url' => 'required|url',
         ]);
 
         $court = Court::find($id);
-
-        //$court->tags()->sync($request->tags);
 
         $court->title = $request->title;
         $court->type = $request->type;

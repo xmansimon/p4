@@ -6,9 +6,7 @@ return [
         '/' => 'Home',
         '/tennis' => 'All courts',
         '/tennis/create' => 'Add a court',
-        '/tennis/search' => 'Find a Court',
-        '/about' => 'About',
-        '/contact' => 'Contact',
+
     ],
     /*
     |--------------------------------------------------------------------------
